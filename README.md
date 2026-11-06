@@ -128,9 +128,7 @@ The database includes synthetic legal cases and pre-seeded test accounts for ins
 Ensure Docker and Docker Compose are installed on your host machine.
 
 ### 1. Clone the repository and configure environment
-```bash
-cp .env.example .env
-```
+The repository does not include environment files. Docker Compose provides local development defaults; before exposing the app or using non-demo data, create an untracked `.env` with strong `DB_PASSWORD` and `JWT_SECRET` values.
 
 ### 2. Start Ollama (on macOS host)
 If running on macOS, launch Ollama natively so Docker containers can communicate via `host.docker.internal:11434`:
