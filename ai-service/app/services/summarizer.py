@@ -67,8 +67,16 @@ DOCUMENT TEXT:
                             "summary": summary_text,
                             "generator": f"Ollama ({settings.OLLAMA_MODEL})"
                         }
+                elif res.status_code == 404:
+                    logger.warning(f"Ollama summarization model '{settings.OLLAMA_MODEL}' not found. Please run 'ollama pull {settings.OLLAMA_MODEL}'. Details: {res.text}")
+                else:
+                    logger.warning(f"Ollama summarization returned HTTP {res.status_code}: {res.text}")
+        except httpx.ConnectError:
+            logger.warning(f"Could not connect to Ollama at {settings.OLLAMA_BASE_URL} for summarization. Is 'ollama serve' running?")
+        except httpx.TimeoutException:
+            logger.warning(f"Ollama summarization timed out for model '{settings.OLLAMA_MODEL}'.")
         except Exception as e:
-            logger.debug(f"Ollama summarization request skipped: {e}")
+            logger.warning(f"Ollama summarization request failed: {e}")
         
         return None
 

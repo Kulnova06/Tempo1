@@ -136,8 +136,16 @@ GROUNDED LEGAL ANSWER:"""
                     answer = data.get("response", "").strip()
                     if answer:
                         return answer
+                elif res.status_code == 404:
+                    logger.warning(f"Ollama model '{model}' not found. Please run 'ollama pull {model}'. Details: {res.text}")
+                else:
+                    logger.warning(f"Ollama returned HTTP {res.status_code}: {res.text}")
+        except httpx.ConnectError:
+            logger.warning(f"Could not connect to Ollama at {settings.OLLAMA_BASE_URL}. Is 'ollama serve' running?")
+        except httpx.TimeoutException:
+            logger.warning(f"Ollama generation timed out for model '{model}'.")
         except Exception as e:
-            logger.debug(f"Ollama RAG synthesis skipped or unavailable: {e}")
+            logger.warning(f"Ollama RAG synthesis error: {e}")
         return None
 
     @staticmethod

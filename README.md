@@ -123,6 +123,87 @@ The database includes synthetic legal cases and pre-seeded test accounts for ins
 
 ---
 
+## 🦙 Local Ollama LLM Setup (100% Private & Offline)
+
+NyayaFlow utilizes **Ollama** to run open-source large language models completely offline on your local machine with zero external cloud API dependencies.
+
+### 1. Hardware & Storage Requirements
+* **Processor**: Apple Silicon (M1/M2/M3/M4) with Metal acceleration, or x86_64 CPU/NVIDIA GPU.
+* **RAM**:
+  * **8 GB RAM**: Minimum (recommended for `llama3.2:1b` or `qwen2.5:3b`).
+  * **16 GB RAM / Unified Memory**: Recommended (optimal for `qwen2.5:latest` 7B or `llama3:latest` 8B).
+* **Storage Space**: ~5 GB free disk space for the primary `qwen2.5:latest` model weights.
+
+### 2. Ollama Installation
+If Ollama is not already installed on your system:
+
+* **macOS (Homebrew)**:
+  ```bash
+  brew install ollama
+  ```
+  *Or download the macOS App directly from [ollama.com/download](https://ollama.com/download).*
+
+* **Linux**:
+  ```bash
+  curl -fsSL https://ollama.com/install.sh | sh
+  ```
+
+* **Windows**:
+  Download the installer from [ollama.com/download/windows](https://ollama.com/download/windows).
+
+### 3. Start the Ollama Local Daemon
+Ensure the Ollama server is running locally on port `11434`:
+```bash
+ollama serve
+```
+*(On macOS/Windows, opening the Ollama desktop app starts the background service automatically).*
+
+### 4. Download (Pull) the Configured Model
+Download the primary configured legal reasoning model:
+```bash
+ollama pull qwen2.5:latest
+```
+*(Optional lightweight alternative for lower-memory hardware:)*
+```bash
+ollama pull llama3.2:1b
+```
+
+### 5. Verify Local Model Operation
+You can verify that the model is downloaded and running locally using any of these checks:
+
+* **List installed local models:**
+  ```bash
+  ollama list
+  ```
+  *(Should list `qwen2.5:latest`)*
+
+* **Test instant local inference:**
+  ```bash
+  curl -s http://localhost:11434/api/generate \
+    -d '{"model": "qwen2.5:latest", "prompt": "State in one sentence what Article 21 protects.", "stream": false}'
+  ```
+
+* **Verify via the NyayaFlow AI Healthcheck:**
+  ```bash
+  curl -s http://localhost:8000/health
+  ```
+  Expected output:
+  ```json
+  {
+    "status": "healthy",
+    "ollama_status": "connected",
+    "active_llm": "qwen2.5:latest",
+    "model_downloaded": true
+  }
+  ```
+
+### 6. Offline Functionality & External Dependencies
+* **100% Offline LLM Inference**: After the initial one-time model download (`ollama pull`), the entire AI inference, summarization, and RAG question-answering workflow operates strictly without internet access.
+* **Embeddings & Vector Search**: Document chunking and semantic vector retrieval use local `pgvector` indexing with built-in offline 384-dimensional projections.
+* **External Dependencies**: The application requires local PostgreSQL (port 5432). The web frontend includes Google Fonts (`Inter`) in `index.html` with graceful fallback to system sans-serif fonts when disconnected from the internet.
+
+---
+
 ## 🚀 Quick Start with Docker Compose
 
 Ensure Docker and Docker Compose are installed on your host machine.
@@ -183,7 +264,7 @@ cd ai-service
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-uvicorn app.main:app --port 8000 --reload
+python3 -m uvicorn app.main:app --port 8000 --reload
 # Running on http://localhost:8000
 ```
 

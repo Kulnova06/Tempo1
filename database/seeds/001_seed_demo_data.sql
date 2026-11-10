@@ -26,30 +26,30 @@ ON CONFLICT (case_number) DO NOTHING;
 -- 3. CASE MEMBERS (Collaborators and Client Observers)
 INSERT INTO case_members (id, case_id, user_id, role_in_case, can_edit, can_upload, can_chat)
 VALUES
-    ('m0000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'lead_counsel', TRUE, TRUE, TRUE),
-    ('m0000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000004', 'client_observer', FALSE, FALSE, TRUE),
-    ('m0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'lead_counsel', TRUE, TRUE, TRUE),
-    ('m0000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000002', 'lead_counsel', TRUE, TRUE, TRUE)
+    ('10000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'lead_counsel', TRUE, TRUE, TRUE),
+    ('10000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000004', 'client_observer', FALSE, FALSE, TRUE),
+    ('10000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', 'a0000000-0000-0000-0000-000000000003', 'lead_counsel', TRUE, TRUE, TRUE),
+    ('10000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000003', 'a0000000-0000-0000-0000-000000000002', 'lead_counsel', TRUE, TRUE, TRUE)
 ON CONFLICT (case_id, user_id) DO NOTHING;
 
 -- 4. PARTIES
 INSERT INTO parties (id, name, party_type, contact_email, contact_phone, address)
 VALUES
-    ('p0000000-0000-0000-0000-000000000001', 'Anand Tech Solutions Pvt Ltd', 'corporation', 'legal@anandtech.example.com', '+91 11 4100 2000', 'Plot 42, Okhla Industrial Area Phase III, New Delhi 110020'),
-    ('p0000000-0000-0000-0000-000000000002', 'State of NCT of Delhi (Cyber Cell)', 'government_body', 'cybercell.delhi@gov.example.in', '+91 11 2349 0000', 'Police Headquarters, ITO, New Delhi 110002'),
-    ('p0000000-0000-0000-0000-000000000003', 'Apex Infrastructure Ltd.', 'corporation', 'contracts@apexinfra.example.com', '+91 22 2650 9000', 'BKC Corporate Park, Bandra East, Mumbai 400051'),
-    ('p0000000-0000-0000-0000-000000000004', 'Metro Rail Corporation Ltd.', 'government_body', 'procurement@metrorail.example.com', '+91 11 2341 7910', 'Metro Bhawan, Fire Brigade Lane, Barakhamba Road, New Delhi 110001'),
-    ('p0000000-0000-0000-0000-000000000005', 'Kavita Rao', 'individual', 'kavita.rao@example.com', '+91 98200 33441', 'Flat 402, Sunbeam Heights, Dadar West, Mumbai 400028'),
-    ('p0000000-0000-0000-0000-000000000006', 'Sunbeam Cooperative Housing Society Ltd.', 'trust', 'secretary@sunbeamchs.example.com', '+91 22 2430 1199', 'Plot 18, Ranade Road, Dadar West, Mumbai 400028')
+    ('20000000-0000-0000-0000-000000000001', 'Anand Tech Solutions Pvt Ltd', 'corporation', 'legal@anandtech.example.com', '+91 11 4100 2000', 'Plot 42, Okhla Industrial Area Phase III, New Delhi 110020'),
+    ('20000000-0000-0000-0000-000000000002', 'State of NCT of Delhi (Cyber Cell)', 'government_body', 'cybercell.delhi@gov.example.in', '+91 11 2349 0000', 'Police Headquarters, ITO, New Delhi 110002'),
+    ('20000000-0000-0000-0000-000000000003', 'Apex Infrastructure Ltd.', 'corporation', 'contracts@apexinfra.example.com', '+91 22 2650 9000', 'BKC Corporate Park, Bandra East, Mumbai 400051'),
+    ('20000000-0000-0000-0000-000000000004', 'Metro Rail Corporation Ltd.', 'government_body', 'procurement@metrorail.example.com', '+91 11 2341 7910', 'Metro Bhawan, Fire Brigade Lane, Barakhamba Road, New Delhi 110001'),
+    ('20000000-0000-0000-0000-000000000005', 'Kavita Rao', 'individual', 'kavita.rao@example.com', '+91 98200 33441', 'Flat 402, Sunbeam Heights, Dadar West, Mumbai 400028'),
+    ('20000000-0000-0000-0000-000000000006', 'Sunbeam Cooperative Housing Society Ltd.', 'trust', 'secretary@sunbeamchs.example.com', '+91 22 2430 1199', 'Plot 18, Ranade Road, Dadar West, Mumbai 400028')
 ON CONFLICT DO NOTHING;
 
 -- 5. CASE PARTIES
 INSERT INTO case_parties (id, case_id, party_id, party_role, advocate_name, legal_counsel_firm)
 VALUES
-    ('cp000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'p0000000-0000-0000-0000-000000000001', 'petitioner', 'Adv. Rajesh Sharma', 'Sharma & Associates'),
-    ('cp000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'p0000000-0000-0000-0000-000000000002', 'respondent', 'Standing Counsel Rahul Mehra', 'Office of Standing Counsel, GNCTD'),
-    ('cp000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', 'p0000000-0000-0000-0000-000000000003', 'petitioner', 'Adv. Priya Menon', 'Menon Corporate Law Partners'),
-    ('cp000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000002', 'p0000000-0000-0000-0000-000000000004', 'respondent', 'Senior Adv. Arvind Datar', 'Datar Chambers')
+    ('30000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000001', 'petitioner', 'Adv. Rajesh Sharma', 'Sharma & Associates'),
+    ('30000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', '20000000-0000-0000-0000-000000000002', 'respondent', 'Standing Counsel Rahul Mehra', 'Office of Standing Counsel, GNCTD'),
+    ('30000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', '20000000-0000-0000-0000-000000000003', 'petitioner', 'Adv. Priya Menon', 'Menon Corporate Law Partners'),
+    ('30000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000002', '20000000-0000-0000-0000-000000000004', 'respondent', 'Senior Adv. Arvind Datar', 'Datar Chambers')
 ON CONFLICT DO NOTHING;
 
 -- 6. LEGAL DOCUMENTS
@@ -80,21 +80,21 @@ ON CONFLICT DO NOTHING;
 -- 8. HEARINGS
 INSERT INTO hearings (id, case_id, hearing_date, hearing_time, court_room, purpose, presiding_judge, outcome_summary, next_steps, status)
 VALUES
-    ('h0000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', '2024-03-18', '10:30:00', 'Courtroom 24', 'admission', 'Hon''ble Justice Prathiba Singh', 'Notice issued to State. Interim protection granted against coercive steps.', 'File rejoinder to State status report within 4 weeks.', 'completed'),
-    ('h0000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', '2025-04-18', '11:00:00', 'Courtroom 24', 'final_argument', 'Hon''ble Justice Prathiba Singh', NULL, 'Final arguments on Section 482 / Article 226 petition.', 'scheduled'),
-    ('h0000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', '2025-05-02', '14:30:00', 'Arbitration Room 3, India International Centre', 'evidence', 'Hon''ble Justice (Retd.) A. K. Sikri', NULL, 'Cross-examination of Claimant''s engineering expert witness.', 'scheduled')
+    ('40000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', '2024-03-18', '10:30:00', 'Courtroom 24', 'admission', 'Hon''ble Justice Prathiba Singh', 'Notice issued to State. Interim protection granted against coercive steps.', 'File rejoinder to State status report within 4 weeks.', 'completed'),
+    ('40000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', '2025-04-18', '11:00:00', 'Courtroom 24', 'final_argument', 'Hon''ble Justice Prathiba Singh', NULL, 'Final arguments on Section 482 / Article 226 petition.', 'scheduled'),
+    ('40000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000002', '2025-05-02', '14:30:00', 'Arbitration Room 3, India International Centre', 'evidence', 'Hon''ble Justice (Retd.) A. K. Sikri', NULL, 'Cross-examination of Claimant''s engineering expert witness.', 'scheduled')
 ON CONFLICT DO NOTHING;
 
 -- 9. CHATS & MESSAGES
 INSERT INTO chats (id, case_id, document_id, user_id, title, model_name)
 VALUES
-    ('ch000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'Quashing Grounds and Interim Protection Inquiry', 'qwen2.5:latest')
+    ('50000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'd0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'Quashing Grounds and Interim Protection Inquiry', 'qwen2.5:latest')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO messages (id, chat_id, sender_type, content, citations, retrieved_chunk_ids)
 VALUES
-    ('mg000000-0000-0000-0000-000000000001', 'ch000000-0000-0000-0000-000000000001', 'user', 'What are the main legal grounds cited by the petitioner for quashing FIR 402/2023?', '[]'::jsonb, '[]'::jsonb),
-    ('mg000000-0000-0000-0000-000000000002', 'ch000000-0000-0000-0000-000000000001', 'assistant', 
+    ('60000000-0000-0000-0000-000000000001', '50000000-0000-0000-0000-000000000001', 'user', 'What are the main legal grounds cited by the petitioner for quashing FIR 402/2023?', '[]'::jsonb, '[]'::jsonb),
+    ('60000000-0000-0000-0000-000000000002', '50000000-0000-0000-0000-000000000001', 'assistant', 
     'Based on the **Writ Petition (Writ_Petition_Anand_Tech_Quashing.pdf)**, the petitioner submits three primary legal grounds for quashing FIR No. 402/2023:
 
 1. **Purely Civil & Commercial Nature**: The controversy arises out of a Software Licensing and Service Level Agreement dated 12.01.2022. The petitioner asserts that contractual billing disputes cannot be criminalized into offences of cheating under Section 420 IPC *(Page 4, Para 9)*.
@@ -109,8 +109,8 @@ ON CONFLICT DO NOTHING;
 -- 10. ACTIVITY LOGS
 INSERT INTO activity_logs (id, case_id, user_id, action_type, entity_type, entity_id, details)
 VALUES
-    ('act00000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'create', 'case', 'c0000000-0000-0000-0000-000000000001', '{"title": "Anand Tech Solutions vs. State of NCT & Ors.", "category": "criminal"}'::jsonb),
-    ('act00000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'upload', 'document', 'd0000000-0000-0000-0000-000000000001', '{"filename": "Writ_Petition_Anand_Tech_Quashing.pdf", "pages": 18}'::jsonb),
-    ('act00000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'verify', 'fact', 'f0000000-0000-0000-0000-000000000001', '{"field": "Petitioner Name", "verified": true}'::jsonb),
-    ('act00000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'chat', 'chat', 'ch000000-0000-0000-0000-000000000001', '{"query": "Quashing Grounds and Interim Protection Inquiry"}'::jsonb)
+    ('70000000-0000-0000-0000-000000000001', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'create', 'case', 'c0000000-0000-0000-0000-000000000001', '{"title": "Anand Tech Solutions vs. State of NCT & Ors.", "category": "criminal"}'::jsonb),
+    ('70000000-0000-0000-0000-000000000002', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'upload', 'document', 'd0000000-0000-0000-0000-000000000001', '{"filename": "Writ_Petition_Anand_Tech_Quashing.pdf", "pages": 18}'::jsonb),
+    ('70000000-0000-0000-0000-000000000003', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'verify', 'fact', 'f0000000-0000-0000-0000-000000000001', '{"field": "Petitioner Name", "verified": true}'::jsonb),
+    ('70000000-0000-0000-0000-000000000004', 'c0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002', 'chat', 'chat', '50000000-0000-0000-0000-000000000001', '{"query": "Quashing Grounds and Interim Protection Inquiry"}'::jsonb)
 ON CONFLICT DO NOTHING;

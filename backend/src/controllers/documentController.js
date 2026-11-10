@@ -213,7 +213,11 @@ exports.downloadDocument = async (req, res, next) => {
 
     const { file_path, file_name, mime_type } = result.rows[0];
 
-    if (!fs.existsSync(file_path)) {
+    const resolvedPath = path.isAbsolute(file_path)
+      ? file_path
+      : path.resolve(__dirname, '../../../', file_path);
+
+    if (!fs.existsSync(resolvedPath)) {
       return res.status(404).json({
         success: false,
         error: 'The requested physical document file is missing or has been relocated.'
@@ -223,7 +227,7 @@ exports.downloadDocument = async (req, res, next) => {
     res.setHeader('Content-Type', mime_type || 'application/pdf');
     res.setHeader('Content-Disposition', `inline; filename="${file_name}"`);
 
-    const fileStream = fs.createReadStream(file_path);
+    const fileStream = fs.createReadStream(resolvedPath);
     fileStream.pipe(res);
   } catch (error) {
     next(error);

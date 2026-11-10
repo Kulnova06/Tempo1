@@ -60,7 +60,10 @@ export const api = {
   }),
   deleteDocument: (id) => client.delete(`/documents/${id}`),
   summarizeDocument: (id) => client.post(`/documents/${id}/summarize`),
-  getDocumentDownloadUrl: (id) => `${API_BASE}/documents/${id}/download`,
+  getDocumentDownloadUrl: (id) => {
+    const token = localStorage.getItem('nyayaflow_token');
+    return token ? `${API_BASE}/documents/${id}/download?token=${encodeURIComponent(token)}` : `${API_BASE}/documents/${id}/download`;
+  },
 
   // Extracted Facts
   getFacts: (params) => client.get('/facts', { params }),
